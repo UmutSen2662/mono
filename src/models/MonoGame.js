@@ -215,7 +215,8 @@ class MonoGame {
             // Must play a Draw 2 (p) to stack
             const card = current.hand.find((c) => c[1] === "p" && c[0] !== "s");
             if (card) {
-                this.playCard(current.id, card);
+                const res = this.playCard(current.id, card);
+                if (res && res.winner) return res;
                 played = true;
             }
         }
@@ -229,7 +230,8 @@ class MonoGame {
                 if (playableCard[0] === "s") {
                     this._playBotWild(current, playableCard, false);
                 } else {
-                    this.playCard(current.id, playableCard);
+                    const res = this.playCard(current.id, playableCard);
+                    if (res && res.winner) return res;
                 }
                 played = true;
             }
