@@ -1,77 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="manifest" href="/public/manifest.json" />
-        <link rel="stylesheet" href="/public/styles.css" />
-        <title>Mono</title>
-        <link rel="icon" type="image/x-icon" href="/public/favicon.svg" />
-        <script>
-            if (localStorage.getItem("sound") == null) {
-                localStorage.setItem("sound", 0);
-            }
-            if (localStorage.getItem("music") == null) {
-                localStorage.setItem("music", 0);
-            }
-            document.addEventListener("DOMContentLoaded", function () {
-                change_sound(true);
-                change_music(true);
-            });
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="manifest" href="/public/manifest.json" />
+    <link rel="stylesheet" href="/public/styles.css" />
+    <title>Mono</title>
+    <link rel="icon" type="image/x-icon" href="/public/favicon.svg" />
+    <script
+      defer
+      src="https://umami.umutsen.dev/script.js"
+      data-website-id="16d49f2f-4037-45cc-868e-7b9b38cfafc8"
+    ></script>
+    <script>
+      if (localStorage.getItem("sound") == null) {
+        localStorage.setItem("sound", 0);
+      }
+      if (localStorage.getItem("music") == null) {
+        localStorage.setItem("music", 0);
+      }
+      document.addEventListener("DOMContentLoaded", function () {
+        change_sound(true);
+        change_music(true);
+      });
 
-            function toggle_fullscreen() {
-                let fullscreen_button = document.getElementById("fullscreen_button");
-                if (document.fullscreenElement) {
-                    document.exitFullscreen();
-                    fullscreen_button.innerHTML = `<img src="/public/options/fullscreen_off.svg" alt="fullscreen toggle" title="fullscreen toggle" draggable="false">`;
-                } else {
-                    document.documentElement.requestFullscreen();
-                    fullscreen_button.innerHTML = `<img src="/public/options/fullscreen_on.svg" alt="fullscreen toggle" title="fullscreen toggle" draggable="false">`;
-                }
-            }
+      function toggle_fullscreen() {
+        let fullscreen_button = document.getElementById("fullscreen_button");
+        if (document.fullscreenElement) {
+          document.exitFullscreen();
+          fullscreen_button.innerHTML = `<img src="/public/options/fullscreen_off.svg" alt="fullscreen toggle" title="fullscreen toggle" draggable="false">`;
+        } else {
+          document.documentElement.requestFullscreen();
+          fullscreen_button.innerHTML = `<img src="/public/options/fullscreen_on.svg" alt="fullscreen toggle" title="fullscreen toggle" draggable="false">`;
+        }
+      }
 
-            function change_sound(start = false) {
-                let sound_button = document.getElementById("sound_button");
-                let condition = start ? localStorage.getItem("sound") == 0 : localStorage.getItem("sound") != 0;
-                if (condition) {
-                    localStorage.setItem("sound", 0);
-                    sound_button.innerHTML = `<img src="/public/options/sound_off.svg" alt="sound toggle" title="sound toggle" draggable="false">`;
-                } else {
-                    localStorage.setItem("sound", 1);
-                    sound_button.innerHTML = `<img src="/public/options/sound_on.svg" alt="sound toggle" title="sound toggle" draggable="false">`;
-                }
-            }
+      function change_sound(start = false) {
+        let sound_button = document.getElementById("sound_button");
+        let condition = start
+          ? localStorage.getItem("sound") == 0
+          : localStorage.getItem("sound") != 0;
+        if (condition) {
+          localStorage.setItem("sound", 0);
+          sound_button.innerHTML = `<img src="/public/options/sound_off.svg" alt="sound toggle" title="sound toggle" draggable="false">`;
+        } else {
+          localStorage.setItem("sound", 1);
+          sound_button.innerHTML = `<img src="/public/options/sound_on.svg" alt="sound toggle" title="sound toggle" draggable="false">`;
+        }
+      }
 
-            function change_music(start = false) {
-                let music_button = document.getElementById("music_button");
-                let music = document.getElementById("music");
-                let condition = start ? localStorage.getItem("music") == 0 : localStorage.getItem("music") != 0;
-                if (condition) {
-                    localStorage.setItem("music", 0);
-                    music.muted = true;
-                    music_button.innerHTML = `<img src="/public/options/music_off.svg" alt="music toggle" title="music toggle" draggable="false">`;
-                } else {
-                    localStorage.setItem("music", 1);
-                    if (start) {
-                        document.addEventListener(
-                            "click",
-                            function () {
-                                music.play();
-                            },
-                            { once: true }
-                        );
-                    } else {
-                        music.play();
-                    }
-                    music.muted = false;
-                    music_button.innerHTML = `<img src="/public/options/music_on.svg" alt="music toggle" title="music toggle" draggable="false">`;
-                }
-            }
-        </script>
-        <%- defineContent('script') %>
-    </head>
-    <body>
-        <audio id="music" src="/public/audio/music.mp3" loop preload="auto"></audio>
-        <div class="wrapper"><%- body %></div>
-    </body>
+      function change_music(start = false) {
+        let music_button = document.getElementById("music_button");
+        let music = document.getElementById("music");
+        let condition = start
+          ? localStorage.getItem("music") == 0
+          : localStorage.getItem("music") != 0;
+        if (condition) {
+          localStorage.setItem("music", 0);
+          music.muted = true;
+          music_button.innerHTML = `<img src="/public/options/music_off.svg" alt="music toggle" title="music toggle" draggable="false">`;
+        } else {
+          localStorage.setItem("music", 1);
+          if (start) {
+            document.addEventListener(
+              "click",
+              function () {
+                music.play();
+              },
+              { once: true },
+            );
+          } else {
+            music.play();
+          }
+          music.muted = false;
+          music_button.innerHTML = `<img src="/public/options/music_on.svg" alt="music toggle" title="music toggle" draggable="false">`;
+        }
+      }
+    </script>
+    <%- defineContent('script') %>
+  </head>
+  <body>
+    <audio id="music" src="/public/audio/music.mp3" loop preload="auto"></audio>
+    <div class="wrapper"><%- body %></div>
+  </body>
 </html>
